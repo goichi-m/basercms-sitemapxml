@@ -38,7 +38,7 @@ class SitemapxmlController extends BcPluginAppController {
  * 
  * @var array
  */
-	public $uses = array('Plugin', 'Content');
+	public $uses = array('Plugin', 'Content', 'Sitemapxml.Sitemapxml');
 /**
  * コンポーネント
  *
@@ -87,7 +87,7 @@ class SitemapxmlController extends BcPluginAppController {
 	public function admin_create() {
 		
 		$this->layout = '../empty';
-		$datas = $this->Content->find('all', array('conditions' => array('Content.status' => true)));		
+		$datas = $this->Sitemapxml->getContentData();
 		$this->set('datas', $datas);
 		$this->render('sitemap');
 
