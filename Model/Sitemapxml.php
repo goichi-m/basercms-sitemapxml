@@ -48,7 +48,6 @@ class Sitemapxml extends BcPluginAppModel
   {
     //モデル利用
     $contentModel = ClassRegistry::init('Content');
-    $blogModel = ClassRegistry::init('Blog.BlogPost');
     //データの取得
     $data = array(); //整形データ格納用
     $i = 0; //配列カウント用
@@ -56,21 +55,7 @@ class Sitemapxml extends BcPluginAppModel
       'conditions' => array(
         'Content.status' => true
       )));
-    $blogDatas = $blogModel->find('all', array(
-      'conditions' => array(
-        'BlogPost.status' => true
-      )));
-    //ブログデータの整形
-    if (!empty($blogDatas)) {
-      foreach ($blogDatas as $blogData) {
-        $data[$i]['Content']['priority'] = 0.1; //書かれた記事の更新頻度
-        $data[$i]['Content']['modified'] = $blogData['BlogPost']['modified'];
-        $data[$i]['Content']['created'] = $blogData['BlogPost']['created'];
-        $data[$i]['Content']['url'] = '/'.$blogData['BlogContent']['name'].'/archives/'.$blogData['BlogPost']['no'];
-        $i++;
-      }
-    }
-    //固定ページデータ
+    //データ
     if (!empty($contentDatas)) {
       foreach ($contentDatas as $contentData) {
         $data[$i]['Content']['priority'] = $contentData['Content']['priority'];
